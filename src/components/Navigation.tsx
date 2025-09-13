@@ -1,12 +1,16 @@
 import { useState } from "react";
-import { Search, User, ShoppingCart, Menu, X } from "lucide-react";
+import { Search, User, ShoppingCart, Menu, X, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
+import { AuthModal } from '@/components/AuthModal'
+import { useAuth } from '@/hooks/useAuth'
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const navigate = useNavigate();
+  const { user, signOut, loading } = useAuth();
 
   return (
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b">
@@ -37,26 +41,43 @@ const Navigation = () => {
           <nav className="hidden md:flex items-center space-x-4">
             <Button 
               variant="ghost" 
-              onClick={() => navigate("/sell")}
+              onClick={() => navigate("/products")}
             >
-              Sell Components
+              Browse
             </Button>
+            {user && user.user_metadata?.role === 'seller' && (
+              <Button 
+                variant="ghost" 
+                onClick={() => navigate("/dashboard")}
+              >
+                Dashboard
+              </Button>
+            )}
             <Button 
               variant="ai-accent" 
               onClick={() => navigate("/ai-evaluation")}
             >
               AI Evaluation
             </Button>
-            <Button 
-              variant="ghost" 
-              size="icon"
-              onClick={() => navigate("/dashboard")}
-            >
-              <User className="w-4 h-4" />
-            </Button>
-            <Button variant="ghost" size="icon">
-              <ShoppingCart className="w-4 h-4" />
-            </Button>
+            
+            {!loading && (
+              user ? (
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-muted-foreground">
+                    {user.user_metadata?.full_name || user.email}
+                  </span>
+                  <Button variant="outline" size="sm" onClick={signOut} className="gap-2">
+                    <LogOut className="w-4 h-4" />
+                    Sign Out
+                  </Button>
+                </div>
+              ) : (
+                <Button variant="outline" size="sm" onClick={() => setIsAuthModalOpen(true)} className="gap-2">
+                  <User className="w-4 h-4" />
+                  Sign In
+                </Button>
+              )
+            )}
           </nav>
 
           {/* Mobile Menu Button */}
@@ -87,10 +108,19 @@ const Navigation = () => {
             <Button 
               variant="ghost" 
               className="w-full justify-start"
-              onClick={() => navigate("/sell")}
+              onClick={() => navigate("/products")}
             >
-              Sell Components
+              Browse Products
             </Button>
+            {user && user.user_metadata?.role === 'seller' && (
+              <Button 
+                variant="ghost" 
+                className="w-full justify-start"
+                onClick={() => navigate("/dashboard")}
+              >
+                Seller Dashboard
+              </Button>
+            )}
             <Button 
               variant="ai-accent" 
               className="w-full justify-start"
@@ -98,16 +128,23 @@ const Navigation = () => {
             >
               AI Evaluation
             </Button>
-            <Button 
-              variant="ghost" 
-              className="w-full justify-start"
-              onClick={() => navigate("/dashboard")}
-            >
-              Dashboard
-            </Button>
+            {!loading && !user && (
+              <Button 
+                variant="outline"
+                className="w-full justify-start"
+                onClick={() => setIsAuthModalOpen(true)}
+              >
+                Sign In / Register
+              </Button>
+            )}
           </div>
         )}
       </div>
+      
+      <AuthModal 
+        isOpen={isAuthModalOpen} 
+        onClose={() => setIsAuthModalOpen(false)} 
+      />
     </header>
   );
 };
