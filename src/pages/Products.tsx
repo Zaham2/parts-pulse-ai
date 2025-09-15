@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
-import { Grid, List, Filter, Search, Loader2 } from "lucide-react";
+import { Grid, List, Filter, Search, Loader2, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import ProductCard from "@/components/ProductCard";
 import Navigation from "@/components/Navigation";
+import { ReviewList } from "@/components/ReviewList";
 import { useProducts, ProductFilters } from '@/hooks/useProducts';
 
 
@@ -158,19 +160,31 @@ const Products = () => {
               : "flex flex-col space-y-4"
             }>
               {products.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  id={product.id}
-                  title={product.title}
-                  price={product.price}
-                  originalPrice={product.original_price || undefined}
-                  condition={product.condition}
-                  image={product.images[0] || '/placeholder.svg'}
-                  seller={product.seller?.full_name || 'Unknown Seller'}
-                  rating={4.5}
-                  category={product.category}
-                  onQuickView={handleQuickView}
-                />
+                <div key={product.id} className="space-y-2">
+                  <ProductCard
+                    id={product.id}
+                    title={product.title}
+                    price={product.price}
+                    originalPrice={product.original_price || undefined}
+                    condition={product.condition}
+                    image={product.images[0] || '/placeholder.svg'}
+                    seller={product.seller?.full_name || 'Unknown Seller'}
+                    rating={4.5}
+                    category={product.category}
+                    onQuickView={handleQuickView}
+                  />
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button variant="ghost" size="sm" className="w-full">
+                        <Star className="h-4 w-4 mr-2" />
+                        View Reviews
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+                      <ReviewList productId={product.id} />
+                    </DialogContent>
+                  </Dialog>
+                </div>
               ))}
             </div>
           )}
