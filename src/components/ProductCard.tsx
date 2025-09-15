@@ -3,6 +3,7 @@ import { Heart, Eye, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { useCart } from "@/contexts/CartContext";
 
 interface ProductCardProps {
   id: string;
@@ -13,9 +14,9 @@ interface ProductCardProps {
   image: string;
   seller: string;
   rating: number;
+  category: string;
   isLiked?: boolean;
   onQuickView: (id: string) => void;
-  onAddToCart: (id: string) => void;
 }
 
 const ProductCard = ({
@@ -27,12 +28,23 @@ const ProductCard = ({
   image,
   seller,
   rating,
+  category,
   isLiked = false,
   onQuickView,
-  onAddToCart,
 }: ProductCardProps) => {
   const [liked, setLiked] = useState(isLiked);
   const [imageError, setImageError] = useState(false);
+  const { addItem } = useCart();
+
+  const handleAddToCart = () => {
+    addItem({
+      id,
+      title,
+      price,
+      image,
+      category,
+    });
+  };
 
   const conditionColor = {
     'Excellent': 'bg-success text-success-foreground',
@@ -94,10 +106,7 @@ const ProductCard = ({
           <Button
             variant="ai-accent"
             size="sm"
-            onClick={(e) => {
-              e.stopPropagation();
-              onAddToCart(id);
-            }}
+            onClick={handleAddToCart}
           >
             <ShoppingCart className="w-4 h-4 mr-2" />
             Add to Cart

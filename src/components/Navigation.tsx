@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Search, User, ShoppingCart, Menu, X, LogOut } from "lucide-react";
+import { Search, User, Menu, X, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import { AuthModal } from '@/components/AuthModal'
 import { useAuth } from '@/hooks/useAuth'
+import { Cart } from '@/components/Cart'
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -39,12 +40,21 @@ const Navigation = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-4">
+            <Cart />
             <Button 
               variant="ghost" 
               onClick={() => navigate("/products")}
             >
               Browse
             </Button>
+            {user && (
+              <Button 
+                variant="ghost" 
+                onClick={() => navigate("/orders")}
+              >
+                Orders
+              </Button>
+            )}
             {user && user.user_metadata?.role === 'seller' && (
               <Button 
                 variant="ghost" 
@@ -105,6 +115,9 @@ const Navigation = () => {
         {/* Mobile Menu */}
         {isMenuOpen && (
           <div className="md:hidden mt-4 pb-4 space-y-2">
+            <div className="flex justify-center mb-2">
+              <Cart />
+            </div>
             <Button 
               variant="ghost" 
               className="w-full justify-start"
@@ -112,6 +125,15 @@ const Navigation = () => {
             >
               Browse Products
             </Button>
+            {user && (
+              <Button 
+                variant="ghost" 
+                className="w-full justify-start"
+                onClick={() => navigate("/orders")}
+              >
+                My Orders
+              </Button>
+            )}
             {user && user.user_metadata?.role === 'seller' && (
               <Button 
                 variant="ghost" 

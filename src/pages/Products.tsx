@@ -168,8 +168,8 @@ const Products = () => {
                   image={product.images[0] || '/placeholder.svg'}
                   seller={product.seller?.full_name || 'Unknown Seller'}
                   rating={4.5}
+                  category={product.category}
                   onQuickView={handleQuickView}
-                  onAddToCart={handleAddToCart}
                 />
               ))}
             </div>
