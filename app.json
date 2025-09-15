@@ -4,10 +4,10 @@
     "slug": "parts-pulse-ai",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./public/favicon.ico",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./public/placeholder.svg",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -20,17 +20,20 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./public/favicon.ico",
         "backgroundColor": "#ffffff"
       },
       "package": "com.partspulseai.app"
     },
     "web": {
-      "favicon": "./assets/favicon.png",
+      "favicon": "./public/favicon.ico",
       "bundler": "metro"
     },
+    "platforms": ["ios", "android", "web"],
+    "newArchEnabled": true,
+    "jsEngine": "hermes",
     "plugins": [
-      "expo-router"
+      "nativewind"
     ],
     "scheme": "parts-pulse-ai"
   }
