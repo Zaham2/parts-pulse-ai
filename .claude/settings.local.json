@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(npm view:*)",
+      "Bash(npm ls:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm run:*)",
+      "Bash(vite build)",
+      "Bash(npx expo start:*)",
+      "Bash(npx expo config:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "name": "parts-pulse-mobile",
+  "version": "1.0.0",
+  "main": "App.tsx",
+  "scripts": {
+    "start": "npx expo start",
+    "android": "npx expo run:android",
+    "ios": "npx expo run:ios",
+    "web": "npx expo start --web"
+  },
+  "dependencies": {
+    "react": "18.3.1",
+    "react-native": "0.76.5",
+    "expo": "~52.0.0",
+    "@expo/vector-icons": "^14.0.0",
+    "expo-asset": "~11.0.0",
+    "expo-constants": "~17.0.0",
+    "expo-font": "~13.0.0",
+    "expo-file-system": "~18.0.0",
+    "nativewind": "^4.2.1",
+    "@react-navigation/native": "^7.1.17",
+    "@react-navigation/native-stack": "^7.3.26",
+    "react-native-safe-area-context": "^5.6.1",
+    "react-native-screens": "^4.16.0",
+    "react-native-reanimated": "^3.16.0",
+    "@react-native-async-storage/async-storage": "^2.2.0",
+    "@tanstack/react-query": "^5.83.0",
+    "@supabase/supabase-js": "^2.57.4",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "date-fns": "^3.6.0",
+    "lucide-react-native": "^0.462.0",
+    "tailwind-merge": "^2.6.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.0",
+    "@types/react": "~18.3.0",
+    "tailwindcss": "3.4.17",
+    "typescript": "~5.8.3"
+  }
+}
